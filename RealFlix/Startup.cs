@@ -16,9 +16,11 @@ namespace RealFlix
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private string _contentRootPath = "";
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            _contentRootPath = env.ContentRootPath;
         }
 
         public IConfiguration Configuration { get; }
@@ -28,8 +30,13 @@ namespace RealFlix
         {
             services.AddControllers();
 
+            string conn = Configuration.GetConnectionString("RealFlixContext");
+            if (conn.Contains("%CONTENTROOTPATH%"))
+            {
+                conn = conn.Replace("%CONTENTROOTPATH%", _contentRootPath);
+            }
             services.AddDbContext<RealFlixContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("RealFlixContext")));
+                    options.UseSqlServer(conn));
 
             services.AddCors(options =>
             {

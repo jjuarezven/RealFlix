@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,6 +9,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using RealFlix.Data;
 
 namespace RealFlix
 {
@@ -25,6 +27,20 @@ namespace RealFlix
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddDbContext<RealFlixContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("RealFlixContext")));
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        );
+            });
+
+            services.AddScoped(typeof(IDataRepository<>), typeof(DataRepository<>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -34,6 +50,12 @@ namespace RealFlix
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors("CorsPolicy");
+
+            app.UseHttpsRedirection();
+
+            app.UseStaticFiles();
 
             app.UseRouting();
 

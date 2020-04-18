@@ -27,12 +27,15 @@ namespace RealFlix.Models
         [Required]
         public DateTime Premiered { get; set; }
         public string OfficialSite { get; set; }
-        public Schedule Schedule { get; set; }
         [Required]
         public string WebChannel { get; set; }
         [Required]
         public string Image { get; set; }
         [Required]
         public string Summary { get; set; }
+        [Required]
+        public DateTime ScheduledTime { get; set; }
+        [Required]
+        public Days ScheduledDays { get; set; }
     }
 }

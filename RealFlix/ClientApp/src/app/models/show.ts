@@ -1,4 +1,4 @@
-import { Genre } from './genre';
+import { Genre } from './enums';
 
 export class Show {
   Id: number;

@@ -9,12 +9,14 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
+import { SidebarModule } from 'primeng/sidebar';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { FormsModule } from '@angular/forms';
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ShowsListComponent
-  ],
+  declarations: [AppComponent, ShowsListComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -23,9 +25,14 @@ import { DialogModule } from 'primeng/dialog';
     InputTextModule,
     ButtonModule,
     TableModule,
-    DialogModule
+    DialogModule,
+    SidebarModule,
+    BrowserAnimationsModule,
+    RadioButtonModule,
+    FormsModule,
+    DropdownModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

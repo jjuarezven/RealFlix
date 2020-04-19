@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -50,11 +51,34 @@ namespace RealFlix.Controllers
             return Ok(show);
         }
 
-        [HttpGet]
-        public ActionResult<IEnumerable<Show>> GetSearch(SearchCriteria search)
+        [HttpGet("~/api/shows/Search")]
+        public ActionResult<IEnumerable<Show>> Search(string searchType, string searchCriteria)
         {
-            //m => { return m.GetType().GetProperty(columnName).GetValue(m, null).ToString().StartsWith(propertyValue); }
-            return new List<Show>();
+            var result = new List<Show>();
+            if (searchType != "Schedule")
+            {
+                var query = $"{searchType}.Contains(\"{searchCriteria}\")";
+                // using this package System.Linq.Dynamic.Core to allow run queries from string variables
+                result = _context.Show.Where(query).ToList();
+            }
+            else
+            {
+                // scheduled time is splitted into day and time values
+                var scheduleInfo = searchCriteria.Split('|');
+                var day = scheduleInfo[0].Trim();
+                // day and time provided
+                if (scheduleInfo.Length > 1)
+                {
+                    var time = scheduleInfo[1].Trim();
+                    result = _context.Show.Where(x => x.ScheduledDays == day && x.ScheduledTime.Contains(time)).ToList();
+                }
+                // only day provided
+                else
+                {
+                    result = _context.Show.Where(x => x.ScheduledDays == day).ToList();
+                }
+            }
+            return result;
         }
 
         // PUT: api/Shows/5

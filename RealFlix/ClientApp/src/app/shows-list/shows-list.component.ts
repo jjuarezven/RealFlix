@@ -16,13 +16,13 @@ export class ShowsListComponent implements OnInit {
   columns: Array<ColumnItem>;
   loadingShows = false;
   searchCriteria: SearchCriteria = new SearchCriteria();
-  selectedSearch: string;
   keywordValue: string;
   languageOptions: SelectItem[];
   genreOptions: SelectItem[];
   channelOptions: SelectItem[];
   scheduleDaysOptions: SelectItem[];
   scheduleDayTime: Date;
+  errorSearch = '';
 
   constructor(private showsService: ShowsService) {}
 
@@ -81,4 +81,31 @@ export class ShowsListComponent implements OnInit {
       { label: 'Sunday', value: 'Sunday' }
     ];
   }
+
+  onClickOption() {
+    this.searchCriteria.Criteria = undefined;
+  }
+
+  search() {
+    this.errorSearch = '';
+    if (this.searchCriteria.Criteria && this.searchCriteria.Type) {
+      if (this.searchCriteria.Type === 'Schedule') {
+        if(this.scheduleDayTime) {
+          this.searchCriteria.Criteria += ` | ${this.scheduleDayTime.getHours()}:${this.scheduleDayTime.getMinutes()}` ;
+        }
+      }
+      this.loadingShows = true;
+      this.showsService.getSearch(this.searchCriteria).subscribe(result => {
+        this.loadingShows = false;
+        if (result) {
+          this.shows = [...result];
+        } else {
+          this.errorSearch = 'No results found';
+        }
+      });
+    } else {
+      this.errorSearch = 'Please check your search conditions!!';
+    }
+  }
+
 }

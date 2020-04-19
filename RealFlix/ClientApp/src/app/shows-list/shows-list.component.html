@@ -8,21 +8,43 @@
             <div class="ui-g">
                 <div class="ui-g-12">
                     <p-radioButton class="ui-g-6" name="group1" value="keyword" label="Keyword" [(ngModel)]="searchCriteria.Type" inputId="opt1"></p-radioButton>
-                    <input type="text" pInputText class="ui-g-6" [ngModel]="searchCriteria.Criteria" *ngIf="searchCriteria.Type === 'keyword'"/>
+                    <input type="text" pInputText [(ngModel)]="keywordValue" *ngIf="searchCriteria.Type === 'keyword'"/>
                 </div>
                 <div class="ui-g-12">
-                    <p-radioButton class="ui-g-6" name="group1" value="language" label="Language" [(ngModel)]="searchCriteria.Type" inputId="opt2">
-                    <p-dropdown class="ui-g-6" [options]="languageOptions" [(ngModel)]="searchCriteria.Criteria" *ngIf="searchCriteria.Type === 'language'"></p-dropdown>
+                    <p-radioButton class="ui-g-6" name="group1" value="language" label="Language" [(ngModel)]="searchCriteria.Type" inputId="opt2"></p-radioButton>
+                    <p-dropdown [options]="languageOptions" [(ngModel)]="searchCriteria.Criteria" placeholder="Select a Language" *ngIf="searchCriteria.Type === 'language'"></p-dropdown>
+                </div>
+                <div class="ui-g-12">
+                    <p-radioButton class="ui-g-6" name="group1" value="genre" label="Genre" [(ngModel)]="searchCriteria.Type" inputId="opt3"></p-radioButton>
+                    <p-dropdown [options]="genreOptions" [(ngModel)]="searchCriteria.Criteria" placeholder="Select a Genre" *ngIf="searchCriteria.Type === 'genre'"></p-dropdown>
+                </div>
+                <div class="ui-g-12">
+                    <p-radioButton class="ui-g-6" name="group1" value="channel" label="Channel" [(ngModel)]="searchCriteria.Type" inputId="opt4"></p-radioButton>
+                    <p-dropdown [options]="channelOptions" [(ngModel)]="searchCriteria.Criteria" placeholder="Select a Channel" *ngIf="searchCriteria.Type === 'channel'"></p-dropdown>
+                </div>
+                <div class="ui-g-12">
+                    <p-radioButton class="ui-g-6" name="group1" value="schedule" label="Schedule" [(ngModel)]="searchCriteria.Type" inputId="opt5"></p-radioButton>
+                    <span *ngIf="searchCriteria.Type === 'schedule'">
+                        <p-dropdown [options]="scheduleDaysOptions" [(ngModel)]="searchCriteria.Criteria" placeholder="Select Day" ></p-dropdown>
+                        <div class="ui-g-8">
+                            <label class="ui-g-4" for="dayTime">Time:</label>
+                            <p-calendar class="ui-g-2" [(ngModel)]="scheduleDayTime" [timeOnly]="true" name="dayTime" [showTime]="true"></p-calendar>
+                        </div>
+                    </span>
+                </div>
+
+                <div class="p-grid">
+                    <div class="p-col-6">
+                        <button pButton type="button" icon="pi pi-search" label="Search"></button>
+                    </div>
                 </div>
                 
-                <div class="ui-g-12"><p-radioButton name="group1" value="genre" label="Genre" [(ngModel)]="selectedSearch" inputId="opt3"></p-radioButton></div>
-                <div class="ui-g-12"><p-radioButton name="group1" value="channel" label="Channel" [(ngModel)]="selectedSearch" inputId="opt4"></p-radioButton></div>
-                <div class="ui-g-12"><p-radioButton name="group1" value="schedule" label="Schedule" [(ngModel)]="selectedSearch" inputId="opt5"></p-radioButton></div>
+                {{searchCriteria | json}}
             </div>
         </div>
     </div>
     <div class="p-col-10">
-        <p-table [value]="shows" [columns]="columns" [loading]="loadingShows" dataKey="ID" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,20,{showAll:'All'}]">
+        <p-table [value]="shows" [columns]="columns" [loading]="loadingShows" dataKey="ID" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5,10,20,{showAll:'All'}]">
             <ng-template pTemplate="header">
                 <tr>
                     <th *ngFor="let col of columns" [pSortableColumn]="col.field">

@@ -14,6 +14,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { FormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
+import { CalendarModule } from 'primeng/calendar';
 
 @NgModule({
   declarations: [AppComponent, ShowsListComponent],
@@ -31,6 +32,7 @@ import { DropdownModule } from 'primeng/dropdown';
     RadioButtonModule,
     FormsModule,
     DropdownModule,
+    CalendarModule
   ],
   providers: [],
   bootstrap: [AppComponent],

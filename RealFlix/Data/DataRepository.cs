@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace RealFlix.Data
@@ -34,5 +35,10 @@ namespace RealFlix.Data
             await _context.SaveChangesAsync();
             return entity;
         }
+
+        //public IEnumerable<T> Find(Expression<Func<T, bool>> predicate)
+        //{
+        //    return _context.Set<T>().Where(predicate);
+        //}
     }
 }

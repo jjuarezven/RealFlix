@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -47,6 +48,13 @@ namespace RealFlix.Controllers
             }
 
             return Ok(show);
+        }
+
+        [HttpGet]
+        public ActionResult<IEnumerable<Show>> GetSearch(SearchCriteria search)
+        {
+            //m => { return m.GetType().GetProperty(columnName).GetValue(m, null).ToString().StartsWith(propertyValue); }
+            return new List<Show>();
         }
 
         // PUT: api/Shows/5

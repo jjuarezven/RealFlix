@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace RealFlix.Data
@@ -11,5 +12,6 @@ namespace RealFlix.Data
         void Update(T entity);
         void Delete(T entity);
         Task<T> SaveAsync(T entity);
+        //IEnumerable<T> Find(Expression<Func<T, bool>> predicate);
     }
 }

@@ -16,26 +16,22 @@ namespace RealFlix.Models
         public string Name { get; set; }
         [Required]
         public string Type { get; set; }
-        [Required]
         public string Language { get; set; }
         [Required]
-        public Genre Genres { get; set; }
+        public string Genres { get; set; }
         [Required]
         public string Status { get; set; }
-        [Required]
-        public int Runtime { get; set; }
-        [Required]
-        public DateTime Premiered { get; set; }
         public string OfficialSite { get; set; }
-        [Required]
         public string WebChannel { get; set; }
         [Required]
         public string Image { get; set; }
         [Required]
         public string Summary { get; set; }
         [Required]
-        public DateTime ScheduledTime { get; set; }
+        public string ScheduledTime { get; set; }
         [Required]
-        public Days ScheduledDays { get; set; }
+        public string ScheduledDays { get; set; }
+        public string Keywords { get; set; }
+
     }
 }

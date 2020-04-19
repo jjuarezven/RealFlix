@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace RealFlix.Models
+﻿namespace RealFlix.Models
 {
     public enum Genre
     {
         Drama,
-        Comedy,
+        Music,
         Romance,
-        [Display(Name = "Romantic Comedy")]
-        RomCom,
+        ScienceFiction,
+        Thriller,
+        Action,
         Crime,
-        Mystery
+        Horror,
+        Mystery,
+        Adventure
     }
 }

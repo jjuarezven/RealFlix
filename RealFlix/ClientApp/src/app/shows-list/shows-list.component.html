@@ -1,1 +1,23 @@
-<p>shows-list works!</p>
+<p-table [value]="shows" [columns]="columns" [loading]="loadingShows" dataKey="ID" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,20,{showAll:'All'}]">
+    <ng-template pTemplate="header">
+        <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                {{ col.header }}
+                <p-sortIcon [field]="col.field"></p-sortIcon>
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+            <td>
+                <img [src]="rowData.image" alt="" class="my-image">
+            </td>
+            <td>
+                {{rowData.name}}
+            </td>
+            <td>
+                {{rowData.genres}}
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

@@ -3,7 +3,7 @@
 </div>
 <div class="p-grid">
     <div class="p-col-2">
-        <div class="p-col-12">
+        <div class="p-col-12" *ngIf="shows?.length > 0">
             <label class="p-col-12">Search by:</label>
             <div class="ui-g">
                 <div class="ui-g-12">
@@ -19,8 +19,8 @@
                     <p-dropdown [options]="genreOptions" [(ngModel)]="searchCriteria.Criteria" placeholder="Select a Genre" *ngIf="searchCriteria.Type === 'Genres'"></p-dropdown>
                 </div>
                 <div class="ui-g-12">
-                    <p-radioButton class="ui-g-6" name="group1" value="Channel" label="Channel" [(ngModel)]="searchCriteria.Type" inputId="opt4" (onClick)="onClickOption();"></p-radioButton>
-                    <p-dropdown [options]="channelOptions" [(ngModel)]="searchCriteria.Criteria" placeholder="Select a Channel" *ngIf="searchCriteria.Type === 'Channel'"></p-dropdown>
+                    <p-radioButton class="ui-g-6" name="group1" value="NetworkName" label="Channel" [(ngModel)]="searchCriteria.Type" inputId="opt4" (onClick)="onClickOption();"></p-radioButton>
+                    <p-dropdown [options]="channelOptions" [(ngModel)]="searchCriteria.Criteria" placeholder="Select a Channel" *ngIf="searchCriteria.Type === 'NetworkName'"></p-dropdown>
                 </div>
                 <div class="ui-g-12">
                     <p-radioButton class="ui-g-6" name="group1" value="Schedule" label="Schedule" [(ngModel)]="searchCriteria.Type" inputId="opt5" (onClick)="onClickOption();"></p-radioButton>
@@ -40,7 +40,6 @@
                 </div>
                 
                 <h2 *ngIf="errorSearch">Please check your search conditions!!</h2>
-                {{searchCriteria | json}}
             </div>
         </div>
     </div>
@@ -57,13 +56,27 @@
             <ng-template pTemplate="body" let-rowData let-columns="columns">
                 <tr>
                     <td>
-                        <img [src]="rowData.image" alt="" class="my-image">
+                        <img [src]="rowData.imageOriginal" alt="" class="my-image">
                     </td>
                     <td>
                         {{rowData.name}}
                     </td>
                     <td>
+                        {{rowData.language}}
+                    </td>
+                    <td>
+                        {{rowData.networkName}}
+                    </td>
+                    <td>
+                        <p-rating [(ngModel)]="rowData.ratingAverage" [stars]=10 readonly="true" [cancel]="false"></p-rating>
+                    </td>
+                    <td>
                         {{rowData.genres}}
+                    </td>
+                    <td>
+                        <button pButton type="button" icon="pi pi-search" style="margin-right:5px" title="Detail"></button>
+                        <button pButton type="button" icon="pi pi-pencil" style="margin-right:5px" title="Edit"></button>
+                        <button pButton type="button" icon="pi pi-trash" style="margin-right:5px" title="Delete"></button>
                     </td>
                 </tr>
             </ng-template>

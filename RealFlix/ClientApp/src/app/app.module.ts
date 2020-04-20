@@ -15,6 +15,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { FormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
+import {RatingModule} from 'primeng/rating';
 
 @NgModule({
   declarations: [AppComponent, ShowsListComponent],
@@ -32,7 +33,8 @@ import { CalendarModule } from 'primeng/calendar';
     RadioButtonModule,
     FormsModule,
     DropdownModule,
-    CalendarModule
+    CalendarModule,
+    RatingModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -33,19 +33,23 @@ export class ShowsListComponent implements OnInit {
       this.loadingShows = false;
       if (result) {
         this.shows = result;
+        console.log(this.shows);
       }
     });
   }
 
   initializeValues() {
     this.columns = [
-      { field: 'image', header: 'Poster' },
+      { field: 'imageOriginal', header: 'Poster' },
       { field: 'name', header: 'Name' },
+      { field: 'language', header: 'Language' },
+      { field: 'networkName', header: 'Channel' },
+      { field: 'ratingAverage', header: 'Rating' },
       { field: 'genres', header: 'Genres' }
     ];
     this.languageOptions = [
       { label: 'English', value: 'English' },
-      { label: 'Spanish', value: 'Spanish' }
+      { label: 'Japanese', value: 'Japanese' }
     ];
     this.genreOptions = [
       { label: 'Drama', value: 'Drama' },
@@ -60,16 +64,19 @@ export class ShowsListComponent implements OnInit {
       { label: 'Adventure', value: 'Adventure' }
     ];
     this.channelOptions = [
-      { label: 'Drama', value: 'Drama' },
-      { label: 'Music', value: 'Music' },
-      { label: 'Romance', value: 'Romance' },
-      { label: 'Science-Fiction', value: 'Science-Fiction' },
-      { label: 'Thriller', value: 'Thriller' },
-      { label: 'Action', value: 'Action' },
-      { label: 'Crime', value: 'Crime' },
-      { label: 'Horror', value: 'Horror' },
-      { label: 'Mystery', value: 'Mystery' },
-      { label: 'Adventure', value: 'Adventure' }
+      { label: 'ABC', value: 'ABC' },
+      { label: 'CBS', value: 'CBS' },
+      { label: 'CTV Sci-Fi Channel', value: 'CTV Sci-Fi Channel' },
+      { label: 'FOX', value: 'FOX' },
+      { label: 'Fuji TV', value: 'Fuji TV' },
+      { label: 'FX', value: 'FX' },
+      { label: 'HBO', value: 'HBO' },
+      { label: 'NBC', value: 'NBC' },
+      { label: 'Showcase', value: 'Showcase' },
+      { label: 'Showtime', value: 'Showtime' },
+      { label: 'TBS', value: 'TBS' },
+      { label: 'The CW', value: 'The CW' },
+      { label: 'TNT', value: 'TNT' }
     ];
     this.scheduleDaysOptions = [
       { label: 'Monday', value: 'Monday' },
@@ -90,7 +97,7 @@ export class ShowsListComponent implements OnInit {
     this.errorSearch = '';
     if (this.searchCriteria.Criteria && this.searchCriteria.Type) {
       if (this.searchCriteria.Type === 'Schedule') {
-        if(this.scheduleDayTime) {
+        if (this.scheduleDayTime) {
           this.searchCriteria.Criteria += ` | ${this.scheduleDayTime.getHours()}:${this.scheduleDayTime.getMinutes()}` ;
         }
       }

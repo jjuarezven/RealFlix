@@ -12,6 +12,5 @@ namespace RealFlix.Data
         void Update(T entity);
         void Delete(T entity);
         Task<T> SaveAsync(T entity);
-        //IEnumerable<T> Find(Expression<Func<T, bool>> predicate);
     }
 }

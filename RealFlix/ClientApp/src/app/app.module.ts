@@ -16,9 +16,12 @@ import { FormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
 import {RatingModule} from 'primeng/rating';
+import { ShowComponent } from './show/show.component';
+import {ListboxModule} from 'primeng/listbox';
+import {InputTextareaModule} from 'primeng/inputtextarea';
 
 @NgModule({
-  declarations: [AppComponent, ShowsListComponent],
+  declarations: [AppComponent, ShowsListComponent, ShowComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -34,7 +37,9 @@ import {RatingModule} from 'primeng/rating';
     FormsModule,
     DropdownModule,
     CalendarModule,
-    RatingModule
+    RatingModule,
+    ListboxModule,
+    InputTextareaModule
   ],
   providers: [],
   bootstrap: [AppComponent],

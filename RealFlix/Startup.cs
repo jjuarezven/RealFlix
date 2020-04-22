@@ -25,7 +25,7 @@ namespace RealFlix
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(opts => opts.JsonSerializerOptions.PropertyNamingPolicy = null);
 
             string conn = Configuration.GetConnectionString("RealFlixContext");
             if (conn.Contains("%CONTENTROOTPATH%"))
@@ -78,7 +78,7 @@ namespace RealFlix
             app.UseSpa(spa =>
             {
                 
-                spa.Options.StartupTimeout = new TimeSpan(0, 5, 0);
+                spa.Options.StartupTimeout = new TimeSpan(0, 0, 80);
                 // To learn more about options for serving an Angular SPA from ASP.NET Core,
                 // see https://go.microsoft.com/fwlink/?linkid=864501
 

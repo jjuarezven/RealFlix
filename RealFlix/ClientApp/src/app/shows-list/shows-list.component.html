@@ -1,7 +1,10 @@
 <div class="p-grid">
-    
+    <button pButton type="button" label="Add Show" (click)="showOperations(1);"></button>
 </div>
 <div class="p-grid">
+    
+</div>
+<div class="p-grid" style="padding-top: 5%;">
     <div class="p-col-2">
         <div class="p-col-12" *ngIf="shows?.length > 0">
             <label class="p-col-12">Search by:</label>
@@ -56,30 +59,37 @@
             <ng-template pTemplate="body" let-rowData let-columns="columns">
                 <tr>
                     <td>
-                        <img [src]="rowData.imageOriginal" alt="" class="my-image">
+                        <img [src]="rowData.ImageOriginal" alt="" class="poster">
                     </td>
                     <td>
-                        {{rowData.name}}
+                        {{rowData.Name}}
                     </td>
                     <td>
-                        {{rowData.language}}
+                        {{rowData.Language}}
                     </td>
                     <td>
-                        {{rowData.networkName}}
+                        {{rowData.NetworkName}}
                     </td>
                     <td>
-                        <p-rating [(ngModel)]="rowData.ratingAverage" [stars]=10 readonly="true" [cancel]="false"></p-rating>
+                        <p-rating [(ngModel)]="rowData.RatingAverage" [stars]=10 readonly="true" [cancel]="false"></p-rating>
                     </td>
                     <td>
-                        {{rowData.genres}}
+                        {{rowData.Genres}}
                     </td>
                     <td>
-                        <button pButton type="button" icon="pi pi-search" style="margin-right:5px" title="Detail"></button>
-                        <button pButton type="button" icon="pi pi-pencil" style="margin-right:5px" title="Edit"></button>
-                        <button pButton type="button" icon="pi pi-trash" style="margin-right:5px" title="Delete"></button>
+                        <button pButton type="button" icon="pi pi-search" style="margin-right:5px" title="Detail" (click)="currentShow = rowData; showOperations(2);"></button>
+                        <button pButton type="button" icon="pi pi-pencil" style="margin-right:5px" title="Edit" (click)="currentShow = rowData; showOperations(3);"></button>
+                        <button pButton type="button" icon="pi pi-trash" style="margin-right:5px" title="Delete" (click)="showOperations(4);"></button>
                     </td>
                 </tr>
             </ng-template>
         </p-table>
     </div>
 </div>
+
+<p-dialog [(visible)]="displayShowModal" [style]="{width: '50vw'}" [modal]="true">
+    <p-header>
+        {{modalTitle}}
+    </p-header>
+    <app-show [show]="currentShow" [languageOptions]="languageOptions" [channelOptions]="channelOptions" [genreOptions]="genreOptions" (updateShowsInfo)="updateShowsInfo($event);"></app-show>
+</p-dialog>

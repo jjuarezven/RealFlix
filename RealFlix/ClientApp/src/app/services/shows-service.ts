@@ -31,6 +31,21 @@ export class ShowsService {
       .pipe(retry(1), catchError(this.errorHandler));
   }
 
+  saveShow(show: Show): Observable<Show> {
+    return this.http
+      .post<Show>(`${this.baseUrl}shows`, show);
+  }
+
+  updateShow(show: Show): Observable<Show> {
+    return this.http
+      .put<Show>(`${this.baseUrl}shows/${show.Id}`, show);
+  }
+
+  /* deleteShow(showId: number): Observable<Show> {
+    return this.http
+      .delete<Show>(`${this.baseUrl}shows`, number);
+  } */
+
   errorHandler(error) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {

@@ -16,6 +16,7 @@ export class ShowsListComponent implements OnInit {
   columns: Array<ColumnItem>;
   loadingShows = false;
   searchCriteria: SearchCriteria = new SearchCriteria();
+  optionsList: Array<Array<SelectItem>>;
   keywordValue: string;
   languageOptions: SelectItem[];
   genreOptions: SelectItem[];
@@ -23,6 +24,9 @@ export class ShowsListComponent implements OnInit {
   scheduleDaysOptions: SelectItem[];
   scheduleDayTime: Date;
   errorSearch = '';
+  displayShowModal = false;
+  modalTitle = '';
+  currentShow: Show;
 
   constructor(private showsService: ShowsService) {}
 
@@ -40,15 +44,17 @@ export class ShowsListComponent implements OnInit {
 
   initializeValues() {
     this.columns = [
-      { field: 'imageOriginal', header: 'Poster' },
-      { field: 'name', header: 'Name' },
-      { field: 'language', header: 'Language' },
-      { field: 'networkName', header: 'Channel' },
-      { field: 'ratingAverage', header: 'Rating' },
-      { field: 'genres', header: 'Genres' }
+      { field: 'ImageOriginal', header: 'Poster' },
+      { field: 'Name', header: 'Name' },
+      { field: 'Language', header: 'Language' },
+      { field: 'NetworkName', header: 'Channel' },
+      { field: 'RatingAverage', header: 'Rating' },
+      { field: 'Genres', header: 'Genres' }
     ];
     this.languageOptions = [
       { label: 'English', value: 'English' },
+      { label: 'Spanish', value: 'Spanish' },
+      { label: 'French', value: 'French' },
       { label: 'Japanese', value: 'Japanese' }
     ];
     this.genreOptions = [
@@ -113,6 +119,42 @@ export class ShowsListComponent implements OnInit {
     } else {
       this.errorSearch = 'Please check your search conditions!!';
     }
+  }
+
+  showOperations(operation: number) {
+    switch (operation) {
+      case 1:
+        this.currentShow = new Show();
+        this.modalTitle = 'New Show';
+        break;
+      case 2:
+        this.modalTitle = 'Show Detail';
+        break;
+      case 3:
+        this.modalTitle = 'Update Show';
+        break;
+      case 4:
+        this.modalTitle = 'Delete Show';
+        break;
+      default:
+        break;
+    }
+    if (operation !== 4) {
+      this.displayShowModal = true;
+    }
+  }
+
+  updateShowsInfo(updatedShow: Show) {
+    if (this.modalTitle === 'New Show') {
+      this.shows = [...this.shows, updatedShow];
+    } else {
+      const showToUpdate = this.shows.map(p =>
+        p.Id === updatedShow.Id
+          ? { ...p, updatedShow }
+          : p
+      );
+    }
+    this.displayShowModal = false;
   }
 
 }

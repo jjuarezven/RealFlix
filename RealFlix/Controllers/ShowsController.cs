@@ -113,7 +113,7 @@ namespace RealFlix.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok(true);
         }
 
         // POST: api/Shows

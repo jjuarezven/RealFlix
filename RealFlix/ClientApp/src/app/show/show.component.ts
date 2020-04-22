@@ -43,10 +43,6 @@ export class ShowComponent implements OnInit, OnChanges {
   }
 
   generateFormControl(showModel: Show) {
-    if (this.show.Id !== 0) {
-      this.setControlsSelection(showModel);
-    }
-
     return this.fb.group({
       Id: new FormControl(showModel ? showModel.Id : ''),
       Url: new FormControl(showModel ? showModel.Url : '', [
@@ -58,9 +54,9 @@ export class ShowComponent implements OnInit, OnChanges {
       Language: new FormControl(showModel ? showModel.Language : '', [
         Validators.required,
       ]),
-      Channel: new FormControl(showModel ? showModel.NetworkName : ''),
+      NetworkName: new FormControl(showModel ? showModel.NetworkName : ''),
       RatingAverage: new FormControl(showModel ? showModel.RatingAverage : 0),
-      Genres: new FormControl(showModel ? showModel.Genres : [], [
+      Genres: new FormControl(showModel ? showModel.Genres !== undefined && showModel.Genres !== '' ? showModel.Genres.split(',') : [] : [], [
         Validators.required,
       ]),
       Summary: new FormControl(showModel ? showModel.Summary : '', [
@@ -69,9 +65,9 @@ export class ShowComponent implements OnInit, OnChanges {
     });
   }
 
-  // gets the values stored as strings and transforms to array to set the selected item on each control
+  // gets the values stored as strings and transforms to array to set the selected items on listbox control
   setControlsSelection(showModel: Show) {
-    //throw new Error("Method not implemented.");
+    const options = showModel.Genres.split(',');
   }
 
   ////#region form getters
@@ -103,14 +99,19 @@ export class ShowComponent implements OnInit, OnChanges {
     this.show.Genres = this.GenresControl.value.join();
     // sending some hardcoded values for simplicity
     this.show.Type = 'Scripted';
+    this.show.KeyWords = this.isNew ? 'new' : 'updated';
     const operation = this.isNew ? this.showService.saveShow(this.show) : this.showService.updateShow(this.show);
     operation.subscribe((result) => {
       if (result) {
-        this.show = result;
+        if (this.isNew) {
+          this.show = result;
+        }
         this.updateShowsInfo.next(this.show);
       }
     });
   }
 
-  cancel() {}
+  cancel() {
+    this.updateShowsInfo.next(null);
+  }
 }

@@ -41,10 +41,10 @@ export class ShowsService {
       .put<Show>(`${this.baseUrl}shows/${show.Id}`, show);
   }
 
-  /* deleteShow(showId: number): Observable<Show> {
+  deleteShow(showId: number): Observable<Show> {
     return this.http
-      .delete<Show>(`${this.baseUrl}shows`, number);
-  } */
+      .delete<Show>(`${this.baseUrl}shows/${showId}`);
+  }
 
   errorHandler(error) {
     let errorMessage = '';

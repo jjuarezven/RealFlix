@@ -17,7 +17,6 @@ export class ShowsListComponent implements OnInit {
   loadingShows = false;
   searchCriteria: SearchCriteria = new SearchCriteria();
   optionsList: Array<Array<SelectItem>>;
-  keywordValue: string;
   languageOptions: SelectItem[];
   genreOptions: SelectItem[];
   channelOptions: SelectItem[];
@@ -27,6 +26,7 @@ export class ShowsListComponent implements OnInit {
   displayShowModal = false;
   modalTitle = '';
   currentShow: Show;
+  displayDeleteShowModal: boolean;
 
   constructor(private showsService: ShowsService) {}
 
@@ -49,7 +49,8 @@ export class ShowsListComponent implements OnInit {
       { field: 'Language', header: 'Language' },
       { field: 'NetworkName', header: 'Channel' },
       { field: 'RatingAverage', header: 'Rating' },
-      { field: 'Genres', header: 'Genres' }
+      { field: 'Genres', header: 'Genres' },
+      { field: '', header: 'Actions' }
     ];
     this.languageOptions = [
       { label: 'English', value: 'English' },
@@ -125,6 +126,7 @@ export class ShowsListComponent implements OnInit {
     switch (operation) {
       case 1:
         this.currentShow = new Show();
+        this.currentShow.Id = 0;
         this.modalTitle = 'New Show';
         break;
       case 2:
@@ -141,20 +143,31 @@ export class ShowsListComponent implements OnInit {
     }
     if (operation !== 4) {
       this.displayShowModal = true;
+    } else {
+      this.displayDeleteShowModal = true;
     }
   }
 
   updateShowsInfo(updatedShow: Show) {
-    if (this.modalTitle === 'New Show') {
-      this.shows = [...this.shows, updatedShow];
-    } else {
-      const showToUpdate = this.shows.map(p =>
-        p.Id === updatedShow.Id
-          ? { ...p, updatedShow }
-          : p
-      );
+    if (updatedShow) {
+      if (this.modalTitle === 'New Show') {
+        this.shows = [...this.shows, updatedShow];
+      } else {
+        this.shows[this.shows.findIndex(el => el.Id === updatedShow.Id)] = updatedShow;
+      }
     }
     this.displayShowModal = false;
+  }
+
+  deleteShow() {
+    this.showsService.deleteShow(this.currentShow.Id).subscribe(result => {
+      if (result) {
+        const index = this.shows.findIndex(el => el.Id === this.currentShow.Id);
+        if (index !== -1) {
+          this.shows.splice(index, 1);
+        }
+      }
+    });
   }
 
 }
